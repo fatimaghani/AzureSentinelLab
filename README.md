@@ -178,35 +178,13 @@ while ($true)
  
  <summary> 
   
- ## Configure and Deploy Resources
+ ## Configure and Deploy Azure Resources such as Log Analytics Workspace, Virtual Machines, and Azure Sentinel
   
 </summary
 We will create a Virtual Machine that will be exposed to the internet where people around world will be able to attack it. Bad actors will try to login to this Virtual Machine once they've discovered that it's now online. While creating the Virtual Machine, we will create a new Resource Group as well.
  
-We search `Virtual Machine` at top of the page in Azure, and once the page loads will choose the '`+ Create`' button to begin the first steps of creating the virtual machine.
-<p align="center"><img src="https://i.imgur.com/CoIAYPA.png" height="70%" width="70%" alt="Create Virtual Machine"/></p>
- 
-Here we will choose to create a resource group (naming convention here is the name of the labname-rg). We're also selecting the '`East US`' as our preferred region due to resource cost and availability. After the region is selected, we will select the image of Windows 10 pro and the other settings will continue to be set at default. 
-<p align="center"><img src="https://i.imgur.com/nZxgZCr.png" height="70%" width="70%" alt="Enter details for Virtual Machine"/></p>
-
-<p align="center"><img src="https://i.imgur.com/35M9M7U.png" height="70%" width="70%" alt"Enter image user name and password"/></p>
-
-Leave the default settings for the inbound port rules that are found below and be sure to check the box for "I confirm I have an eligible Windows 10/11 license with multi-tenant hosting rights."
- 
-   >**Note**: There will be a validation error message present if this check box is not selected while creating the virtual machine.
- 
-<p align="center"><img src="https://i.imgur.com/INNWJ1p.png" height="70%" width="70%" alt="Select license checkbox"/></p>
- 
-In the Networking portion, we will select to change the NIC Network Security Group (NSG) from Basic to Advanced to adjust the inbound rules of the NSG to allow everything into the Virtual Machine.
- 
- <p align="center"><img src="https://i.imgur.com/CK6HXdb.png" height="70%" width="70%" alt="Settings for Networking of VM"/></p>
- 
- Now, we'll need to remove (select 3 dots to the right of the page) the current default inbound rules on the virtual machine and will adjust them to rules that are most accepting of all traffic so that it can be found by the bad actors.
- <p align="center"><img src="https://i.imgur.com/8uLMfCn.png" heigh="70%" width="70%" alt="Remove Default Inound Rules"></p>
- 
- We will select the `'Add an Inbound Rule'` link option and then make a change to the 'Destination port ranges' to an ' * ' as a wildcard to accept anything. Then, we'll select to change the Priority to 100 and make a name change to your liking (DANGER_ANY_IN). You can now select `'Add'` 
  <p align="center"><img src="https://i.imgur.com/i4dgfhu.png" height="70%" width="70%" alt="Create New NSG"/></p>
- Adjusting the inbound rules will appear as follows:
+ To make it susceptive to attacks, we will adjusting the inbound rules as follows:
  <pre>
  <b>Source </b>
  any
@@ -222,73 +200,14 @@ In the Networking portion, we will select to change the NIC Network Security Gro
  any
  <b>Priority</b>
  100</pre>
- 
- The added inbound rule with the changes are now reflected here:
- <p align="center"><img src="https://i.imgur.com/XhQYX8n.png" height="100%" width="100%" alt="Updated NSG Inbound Rules"/></p>
- 
-We will now press 'OK' to move forward. 
-Once these have been looked over, we can now select to `'Review + Create'`
-<p align="center"><img src="https://i.imgur.com/9VP2ui7.png" height="70%" width="70%" alt="Review Create Virtual Machine"/></p>
- 
-Validation of Creation of VM --- This is the final step in creating the virtual Machine (VM) and see that it has been validated with a "Pass" and confirms all the details that have been added to the VM as a summary result. 
- <p align="center"><img src="https://i.imgur.com/6baoa2e.png" height="70%" width="70%" alt="Final State for Creating Virtual Machine"/></p>
- 
- Select the Create Button
- <p align="center"><img src="https://i.imgur.com/Wb9Ggus.png" height="70%" width="70%" alt="Select Create Button for VM"/></p>
- 
- This is the final confirmation displaying the creation of the Virtual Machine 
- <p align="center"><img src="https://i.imgur.com/fjDO3oV.png" height="70%" width="70%" alt="Deployment of VM"/></p>
- 
- </details>  
- 
- #
- 
- <details>
- <summary>
   
-## Create Our Log Ananlytics Workspace 
-  
- </summary>  
-Now, we are going to create our Log Analytics Workspace to receive or ingest logs from the virtual machine such as windows event logs and our custom logs that has geographic information in order to discover where the attackers are located. Our SIEM will be able to connect to the workspace to be able to display the geo-data on the map that will be created later in the lab. 
+Following, we are going to create our Log Analytics Workspace to receive or ingest logs from the virtual machine such as windows event logs and our custom logs that has geographic information in order to discover where the attackers are located. Our SIEM will be able to connect to the workspace to be able to display the geo-data on the map that will be created later in the lab. 
  
 <p align="center"><img src="https://i.imgur.com/1ExWnBV.png" height="70%" width="70%" alt="Create Log Analytics Workspace"/></p>
  
 <p align="center"><img src="https://i.imgur.com/Xq0jqhE.png" height="70%" width="70%" alt="Enter Details for Log Analytics Workspace"/></p>
  
 
- 
-Next, you will 'Review + Create' the log analytics workspace
-<p align="center"><img src="https://i.imgur.com/zEMPI4D.png" height="70%" width="70%" alt="Review + Create LAW"/></p>
-
-<p align="center"><img src="https://i.imgur.com/Gc4bGCG.png" height="70%" width="70%" alt="Create LaW"/></p>
-
-<p align="center"><img src="https://i.imgur.com/YklC74u.png" height="70%" width="70%" alt="Deployment of LaW"/></p>
- 
-We can now search for 'Defender for Cloud' at the top of the page so that we can enable the ability to gather logs from the Virtual Machine.  
-<p align="center"><img src="https://i.imgur.com/ZS8bpZv.png" height="70%" width="70%" alt="Defender for Cloud"/></p>
- 
-To do so, we will navigate to 'Environment Settings' then select the log analytics workspace that we created previously that is displayed as a selectable option. We will then, select to turn 'Azure Defender On' and then turn <b>OFF</b> 'SQL Servers on Machine'. Once this is done, you will select to '<b> Save </b>'. 
-<p align="center"><img src="https://i.imgur.com/v7SNEGs.png" height="70%" width="70%" alt="Pricing & Settings"/></p>
- 
-Following this, we will select '`Data Collection`' in the left pane and enable '`All Events`' option under store additional raw data - windows securtity events then choose to '**`Save`**'.
-<p align="center"><img src="https://i.imgur.com/lKdP5Ah.png" height="70%" width="70%" alt="Select All Events"/></p>
- 
-We can now go back to our log analytics workspace to connect our Virtual Machine. Search '`Log Analytics Workspace`' and then scroll down to select the Virtual Machine option. You will choose the VM that we created previously then select the chainlink to '`Connect`' the VM to the log analytics workspace. 
- 
-<p align="center"><img src="https://i.imgur.com/IdHGvQ4.png" height="70%" width="70%" alt="choose workspace"/></p>
-<p align="center"><img src="https://i.imgur.com/9mSAa3S.png" height="70%" width="70%" alt="Select Virtual Machine in List"/></p>
- 
- Select the Virtual Machine
-<p align="center"><img src="https://i.imgur.com/r9xAInL.png" height="70%" width="70%" alt="select vm"/></p>
- 
-<p align="center"><img src="https://i.imgur.com/zSpANfP.png" height="70%" width="70%" alt="Connect Virtual Machine"/></p>
-
- </details> 
- 
- # 
- 
- <details>
- <summary>
  
 ## Setup Azure Sentinel
  
