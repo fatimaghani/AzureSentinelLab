@@ -180,9 +180,7 @@ while ($true)
 </summary
 We will create a Virtual Machine that will be exposed to the internet where people around world will be able to attack it. Bad actors will try to login to this Virtual Machine once they've discovered that it's now online. While creating the Virtual Machine, we will create a new Resource Group as well.
  
-We will create a Virtual Machine that will be exposed to the internet where people around world will be able to attack it. 
-<p align="center"><img src="https://i.imgur.com/h3R75Bp.png" height="80%" width="80%" alt="Create Virtual Machine"/></p>
-To make it susceptive to attacks, we will adjust the inbound rules as follows:
+We will create a Virtual Machine that will be exposed to the internet where people around world will be able to attack it. To make it susceptive to attacks, we will adjust the inbound rules as follows:
  <pre>
  <b>Source </b>
  any
@@ -198,6 +196,8 @@ To make it susceptive to attacks, we will adjust the inbound rules as follows:
  any
  <b>Priority</b>
  100</pre>
+
+<p align="center"><img src="https://i.imgur.com/h3R75Bp.png" height="80%" width="80%" alt="Create Virtual Machine"/></p>
 
 Bad actors will try to login to this Virtual Machine once they've discovered that it's now online. While creating the Virtual Machine, we will create a new Resource Group as well.
 <p align="center"><img src="https://i.imgur.com/VENcOF8.png" height="80%" width="80%" alt="Create Virtual Machine"/></p>
