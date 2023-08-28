@@ -303,7 +303,7 @@ FAILED_RDP_WITH_GEO_CL
 | summarize event_count=count() by latitude, longitude, sourcehost, label, destination, country
 </pre>
 
-We set the Visualization type to Map. Now we can a graphic of our attackers from all over the world.
+We set the Visualization type to Map, creating a graphic of our attackers from all over the world.
 
 <p align="center"> <img src="https://i.imgur.com/qOt4MpP.png" height="120%" width="120%" alt="Workbook"/></p>
 
